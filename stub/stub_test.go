@@ -31,9 +31,11 @@ func TestStub(t *testing.T) {
 							}
 						},
 						"output":{
+                            "delay": "1s",
 							"data":{
 								"Hello":"World"
 							}
+
 						}
 					}`
 				read := bytes.NewReader([]byte(payload))
@@ -48,7 +50,7 @@ func TestStub(t *testing.T) {
 				return httptest.NewRequest("GET", "/", nil)
 			},
 			handler: listStub,
-			expect:  "{\"Testing\":{\"TestMethod\":[{\"Input\":{\"equals\":{\"Hola\":\"Mundo\"},\"contains\":null,\"matches\":null},\"Output\":{\"data\":{\"Hello\":\"World\"},\"error\":\"\"}}]}}\n",
+			expect:  "{\"Testing\":{\"TestMethod\":[{\"Input\":{\"equals\":{\"Hola\":\"Mundo\"},\"contains\":null,\"matches\":null},\"Output\":{\"delay\":\"1s\",\"data\":{\"Hello\":\"World\"},\"error\":\"\"}}]}}\n",
 		},
 		{
 			name: "find stub equals",
@@ -57,7 +59,7 @@ func TestStub(t *testing.T) {
 				return httptest.NewRequest("POST", "/find", bytes.NewReader([]byte(payload)))
 			},
 			handler: handleFindStub,
-			expect:  "{\"data\":{\"Hello\":\"World\"},\"error\":\"\"}\n",
+			expect:  "{\"delay\":\"1s\",\"data\":{\"Hello\":\"World\"},\"error\":\"\"}\n",
 		},
 		{
 			name: "add nested stub equals",
@@ -290,7 +292,7 @@ func TestStub(t *testing.T) {
 				return httptest.NewRequest("GET", "/find", bytes.NewReader([]byte(payload)))
 			},
 			handler: handleFindStub,
-			expect:  "{\"data\":{\"hello\":\"world\"},\"error\":\"\"}\n",
+			expect:  "{\"delay\":\"0s\",\"data\":{\"hello\":\"world\"},\"error\":\"\"}\n",
 		},
 		{
 			name: "add stub matches regex",
@@ -379,7 +381,7 @@ func TestStub(t *testing.T) {
 				return httptest.NewRequest("GET", "/find", bytes.NewReader([]byte(payload)))
 			},
 			handler: handleFindStub,
-			expect:  "{\"data\":{\"reply\":\"OK\"},\"error\":\"\"}\n",
+			expect:  "{\"delay\":\"0s\",\"data\":{\"reply\":\"OK\"},\"error\":\"\"}\n",
 		},
 		{
 			name: "error find stub contains",
